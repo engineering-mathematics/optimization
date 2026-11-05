@@ -18,7 +18,9 @@ if TYPE_CHECKING:
 
 DEFAULT_TOL = 1e-10
 DEFAULT_MAX_EVALS = 1000
-RANK_RTOL = 1e-12
+# Central-difference Jacobians carry ~eps^(2/3) relative noise, so a null direction shows up
+# as a singular value near 1e-11 * sigma_max, not 0. 1e-8 separates the two with margin.
+RANK_RTOL = 1e-8
 
 
 def _covariance(jac: Array) -> Array | None:
